@@ -38,7 +38,7 @@
       <div v-if="bad" class="health-tell">疲れているよ<br>十分頑張っているから休めるだけ休んでね</div>
       <div v-if="soso" class="health-tell">疲れ気味だよ<br>自分の体を大切にね</div>
       <div v-if="good" class="health-tell">記録上はまだ大丈夫だよ<br>でも、心の声を優先して休んでね</div>
-      
+      <div class="table">
       <table>
         <tr>
           <th>日付</th>
@@ -48,7 +48,6 @@
           <th>心の安定</th>
           <th>食欲</th>
           <th>気力</th>
-          <th>備考</th>
         </tr>
         <tr>
           <td>{{now}}</td>
@@ -100,11 +99,10 @@
             </option>
         </select>
           </td>
-          <td><input type="text"></td>
         </tr>
-        <button @click="healthcount">決定</button>
       </table>
-      
+    </div>
+    <button @click="healthcount">決定</button>
     </div>
     
     <div id="top-btn" class="page-top" v-scroll-to = "'body'">↑</div>
@@ -114,7 +112,7 @@
     </div>
     <div class="explain" id="2">
         <h2>使い方</h2>
-        <p>その日の体調を〇✕？(わからない)の３つから選んで記入してね<br>今日の状態をあなたに伝えるよ<br>ログインしてメンバーになったら記録が残るよ<br>その記録をお医者さんに見せてもいいよ<br>もっと記入したいことがあったら備考に書いてね</p>
+        <p>その日の体調を〇✕？(わからない)の３つから選んで記入してね<br>今日の状態をあなたに伝えるよ<br>ログインしてメンバーになったら記録が残るよ<br>その記録をお医者さんに見せてもいいよ</p>
     </div>
   </div>
 </template>
@@ -471,10 +469,13 @@ p {
         font-size: 35px;
     }
     .sloth {
-        display: none;
+      width: 100%;
+      height: auto;
+      padding: 20px 0px 0px 0px;
+      margin-top: -100px;
     }
-    header {
-        margin-top: 300px ;
+    .wave {
+      display: none;
     }
     .inner-nav {
         display: none;
@@ -482,8 +483,8 @@ p {
     .title {
         text-shadow: 2px 2px 3px grey;
     }
-    table {
-      overflow: auto;
+    .table {
+      overflow-x: auto;
     }
 }
  

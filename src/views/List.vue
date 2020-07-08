@@ -2,7 +2,7 @@
     <div>
         <header>
             <h1>心身を休めるためにやることリスト</h1>
-            <p>例</p>
+            <p><a href="https://www.youtube.com/watch?v=_ONvyKmW63I&list=WL">例としてほっしーさんのYouTube</a></p>
         </header>
         <ul>
             <li v-for="(todo,index) in todos" :key="index">{{todo}}</li>

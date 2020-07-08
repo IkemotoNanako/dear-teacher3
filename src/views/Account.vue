@@ -39,6 +39,7 @@
       <div v-if="bad" class="health-tell bad">疲れているよ<br>十分頑張っているから休めるだけ休んでね</div>
       <div v-if="soso" class="health-tell soso">疲れ気味だよ<br>自分の体を大切にね</div>
       <div v-if="good" class="health-tell good">記録上はまだ大丈夫だよ<br>でも、心の声を優先して休んでね</div>
+      <div class="table">
       <table>
         <tr>
           <th>日付</th>
@@ -100,10 +101,11 @@
             </option>
         </select>
           </td>
-          <td><input type="text"></td>
+          <td><input type="text" v-model="remark"></td>
         </tr>
       </table>
-      <button @click="healthcount">決定</button>
+      </div>
+      <button @click="healthcount,add">決定</button>
     </div>
     
     <div id="top-btn" class="page-top" v-scroll-to = "'body'">↑</div>
@@ -113,12 +115,13 @@
     </div>
     <div class="explain" id="2">
         <h2>使い方</h2>
-        <p>その日の体調を〇✕？(わからない)の３つから選んで記入してね<br>今日の状態をあなたに伝えるよ<br>ログインしたら記録が残るよ<br>その記録をお医者さんに見せてもいいよ<br>もっと記入したいことがあったら備考に書いてね</p>
+        <p>その日の体調を〇✕？(わからない)の３つから選んで記入してね<br>今日の状態をあなたに伝えるよ<br>記録をお医者さんに見せてもいいよ<br>もっと記入したいことがあったら備考に書いてね</p>
     </div>
   </div>
 </template>
 
 <script>
+import firebase from "firebase";
 var date = new Date()
 export default {
   data(){
@@ -139,7 +142,8 @@ export default {
      soso: false,
      good: false,
      active: false,
-     navi: false
+     navi: false,
+     remark: ''
     };
   },
   methods: {
@@ -152,10 +156,9 @@ export default {
       naviOpen: function() {
       this.active = !this.active;
       this.navi = !this.navi;
-    },
-    healthcount() {
+      },
+      healthcount() {
       this.health=0;
-      console.log(this.selected1);
       if (this.selected1 == "✕") {
         this.health++;
       }
@@ -206,7 +209,23 @@ export default {
         this.soso=false;
         this.good=true;
       }
-    }  
+      },
+      add() {
+        var db = firebase.firestore();
+        db.collections("record")
+          .add({
+            selected1: '',
+            selected2: '',
+            selected3: '',
+            selected4: '',
+            selected5: '',
+            selected6: '',
+            remark: ''
+          })
+          .then(doc => {
+            console.log(doc);
+          });
+    }
   }
 };
 
@@ -218,9 +237,6 @@ export default {
 table {
    margin-left: 50px;
    padding-top: 70px;
- }
- button {
-   margin-left: 800px
  }
  /*体調通知*/
  .health-tell {
@@ -475,10 +491,13 @@ p {
         font-size: 35px;
     }
     .sloth {
-        display: none;
+      width: 100%;
+      height: auto;
+      padding: 20px 0px 0px 0px;
+      margin-top: -100px;
     }
-    header {
-        margin-top: 300px ;
+    .wave {
+      display: none;
     }
     .inner-nav {
         display: none;
@@ -486,8 +505,8 @@ p {
     .title {
         text-shadow: 2px 2px 3px grey;
     }
-    table {
-
+    .table {
+      overflow-x: auto;
     }
 }
  
