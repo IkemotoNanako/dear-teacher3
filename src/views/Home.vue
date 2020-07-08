@@ -478,13 +478,16 @@ p {
       display: none;
     }
     .inner-nav {
-        display: none;
+      display: none;
     }
     .title {
-        text-shadow: 2px 2px 3px grey;
+      text-shadow: 2px 2px 3px grey;
     }
     .table {
       overflow-x: auto;
+    }
+    .health-tell {
+      margin: 160px 30px 20px 30px;
     }
 }
  

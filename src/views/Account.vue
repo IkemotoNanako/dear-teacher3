@@ -105,7 +105,7 @@
         </tr>
       </table>
       </div>
-      <button @click="healthcount,add">決定</button>
+      <button @click="healthcount();add()">決定</button>
     </div>
     
     <div id="top-btn" class="page-top" v-scroll-to = "'body'">↑</div>
@@ -212,15 +212,16 @@ export default {
       },
       add() {
         var db = firebase.firestore();
-        db.collections("record")
+        db.collection("record")
           .add({
-            selected1: '',
-            selected2: '',
-            selected3: '',
-            selected4: '',
-            selected5: '',
-            selected6: '',
-            remark: ''
+            now:this.now,
+            selected1:this.selected1,
+            selected2:this.selected2,
+            selected3:this.selected3,
+            selected4:this.selected4,
+            selected5:this.selected5,
+            selected6:this.selected6,
+            remark:this.remark
           })
           .then(doc => {
             console.log(doc);
@@ -507,6 +508,9 @@ p {
     }
     .table {
       overflow-x: auto;
+    }
+    .health-tell {
+       margin: 160px 30px 20px 30px;
     }
 }
  
