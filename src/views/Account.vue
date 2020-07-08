@@ -13,7 +13,8 @@
             <ul class="inner-nav">
                 <li class="menu"><a href="#1">コンセプト</a></li>
                 <li class="menu"><a href="#2">使い方</a></li>
-                <li @click="log"><a>記録</a></li> 
+                <li class="menu" @click="log"><a>記録</a></li> 
+                <li class="menu" @click="list"><a>リスト</a></li> 
             </ul>
         </nav>
     </header>
@@ -30,7 +31,7 @@
             <li><a href="#1">コンセプト</a></li>
             <li><a href="#2">使い方</a></li>
             <li @click="log"><a>記録</a></li>
-            
+            <li @click="list"><a>リスト</a></li>
           </ul>
         </nav>
     </transition>
@@ -142,8 +143,11 @@ export default {
     };
   },
   methods: {
-      lig() {
+      log() {
         this.$router.push('/log')
+      },
+      list() {
+        this.$router.push('/list')
       },
       naviOpen: function() {
       this.active = !this.active;
@@ -332,7 +336,7 @@ header {
 }
 h1 {
     color: #000;
-    font-size: 45px;
+    font-size: 44px;
     font-weight: bold;
     padding: 20px;
     font-style: italic;

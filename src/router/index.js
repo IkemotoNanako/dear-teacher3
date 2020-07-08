@@ -4,7 +4,8 @@ import Home from '../views/Home.vue'
 import Account from '../views/Account.vue'
 import Signup from '../views/Signup.vue' 
 import Signin from '../views/Signin.vue' 
-import Log from '../views/Log.vue' 
+import Log from '../views/log.vue'
+import List from '../views/List.vue' 
 import firebase from 'firebase'
 
 Vue.use(VueRouter)
@@ -14,9 +15,6 @@ Vue.use(VueRouter)
     path: '/',
     name: 'Home',
     component: Home,
-    meta: {
-      requiresAuth: true
-    }
   },
   {
     path: '/Account',
@@ -40,6 +38,11 @@ Vue.use(VueRouter)
     path: '/log',
     name: 'Log',
     component: Log
+  },
+  {
+    path: '/list',
+    name: 'List',
+    component: List
   }
 ]
 

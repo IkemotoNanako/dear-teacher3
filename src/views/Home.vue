@@ -38,6 +38,7 @@
       <div v-if="bad" class="health-tell">疲れているよ<br>十分頑張っているから休めるだけ休んでね</div>
       <div v-if="soso" class="health-tell">疲れ気味だよ<br>自分の体を大切にね</div>
       <div v-if="good" class="health-tell">記録上はまだ大丈夫だよ<br>でも、心の声を優先して休んでね</div>
+      
       <table>
         <tr>
           <th>日付</th>
@@ -101,8 +102,9 @@
           </td>
           <td><input type="text"></td>
         </tr>
+        <button @click="healthcount">決定</button>
       </table>
-      <button @click="healthcount">決定</button>
+      
     </div>
     
     <div id="top-btn" class="page-top" v-scroll-to = "'body'">↑</div>
@@ -215,9 +217,7 @@ table {
    margin-left: 50px;
    padding-top: 70px;
  }
- button {
-   margin-left: 970px
- }
+
  /*体調通知*/
  .health-tell {
    text-align:center;
@@ -481,6 +481,9 @@ p {
     }
     .title {
         text-shadow: 2px 2px 3px grey;
+    }
+    table {
+      overflow: auto;
     }
 }
  

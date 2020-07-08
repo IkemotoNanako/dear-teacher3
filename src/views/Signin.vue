@@ -32,7 +32,7 @@ export default {
     {
                         user: data.user
                         });
-                    this.$router.replace("/");
+                    this.$router.replace("/Account");
                 }
             });
         }
