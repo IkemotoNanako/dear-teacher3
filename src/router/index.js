@@ -1,7 +1,9 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+import Home2 from '../views/Home2.vue'
 import Account from '../views/Account.vue'
+import Account2 from '../views/Account2.vue'
 import Signup from '../views/Signup.vue' 
 import Signin from '../views/Signin.vue' 
 import Log from '../views/log.vue'
@@ -20,6 +22,19 @@ Vue.use(VueRouter)
     path: '/Account',
     name: 'Account',
     component: Account,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/home2',
+    name: 'Home2',
+    component: Home2,
+  },
+  {
+    path: '/Account2',
+    name: 'Account2',
+    component: Account2,
     meta: {
       requiresAuth: true
     }

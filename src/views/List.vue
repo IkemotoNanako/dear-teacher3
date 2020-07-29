@@ -1,14 +1,16 @@
 <template>
-    <div>
+    <div class="list">
         <header>
             <h1>心身を休めるためにやることリスト</h1>
-            <p><a href="https://www.youtube.com/watch?v=_ONvyKmW63I&list=WL">例としてほっしーさんのYouTube</a></p>
+            <a href="https://www.youtube.com/watch?v=_ONvyKmW63I&list=WL">例としてほっしーさんのYouTube</a>
         </header>
+        <p>注意！ ページを戻ったり更新したりするとリストは消えるよ</p>
         <ul>
-            <li v-for="(todo,index) in todos" :key="index">{{todo}}</li>
+            <li v-for="(todo,index) in todos" :key="index"><input type="checkbox">{{todo}}</li>
         </ul>
         <input type="text" v-model="newTodo">
-        <input type="submit" value="add" @click="addTodo">
+        <input type="submit" value="追加" @click="addTodo">
+        <input type="submit" value="削除" @click="delateTodo">
     </div>
 </template>
 <script>
@@ -24,20 +26,35 @@ export default {
         addTodo() {
             this.todos.push(this.newTodo);
             this.newTodo = '';
+        },
+         delateTodo() {
+        this.subjects.splice(this.newTodo);
         }
     }
 }
 </script>
 
 <style>
+.list {
+    background-color: rgb(220, 251, 255);
+}
 header {
     display: flex;
 }
 h1 {
-    padding: 20px;
+    padding: 20px 20px 0px 20px;
+}
+a {
+    padding: 50px 0px 0px 40px;
 }
 p {
-    padding: 40px
+    padding-bottom: 40px;
+}
+ul {
+    list-style: none;
+}
+input {
+    margin-bottom: 100px;
 }
 </style>
 

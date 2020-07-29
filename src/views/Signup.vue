@@ -1,7 +1,9 @@
 <template>
     <div class="signup">
+        
         <div class="card">
             <p class="title">新規登録</p>
+            <p>メンバー登録は各項目記入後、届いたメールを開いたら完了します</p>
             <div class="form">
                 <input type="text" placeholder="ユーザーネーム" v-model="name" />
                 <input type="email" placeholder="ユーザーメール" v-model="email" />

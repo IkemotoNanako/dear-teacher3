@@ -8,13 +8,14 @@
     </div>
     <img src="https://media.istockphoto.com/vectors/cute-hanging-sloth-vector-id1093750176?k=6&m=1093750176&s=612x612&w=0&h=tO5AnsToo9WqSeKXIXDDGPGzANAUVLs8laf1WvIPMfI=" alt="" class="sloth"> 
     <header>
-        <h1>SLOTH HEALTH  体調管理代行サービス<br>メンバーページ</h1>
+        <h1>SLOTH HEALTH  体調管理代行サービス<br>{{value}}</h1>
         <nav>
             <ul class="inner-nav">
                 <li class="menu"><a href="#1">コンセプト</a></li>
                 <li class="menu"><a href="#2">使い方</a></li>
-                <li class="menu" @click="log"><a>記録</a></li> 
-                <li class="menu" @click="list"><a>リスト</a></li>
+                <li class="menu" @click="log" v-if="value==='メンバー版'"><a>記録</a></li> 
+                <li class="menu" @click="list" v-if="value==='メンバー版'"><a>リスト</a></li>
+                <li class="menu" @click="account" v-if="value==='お試し版'"><a>ログイン</a></li> 
             </ul>
         </nav>
     </header>
@@ -30,15 +31,16 @@
           <ul class="menu-content_inner">
             <li><a href="#1">コンセプト</a></li>
             <li><a href="#2">使い方</a></li>
-            <li @click="log"><a>記録</a></li>
-            <li @click="list"><a>リスト</a></li>
+            <li @click="list" v-if="value==='メンバー版'"><a>リスト</a></li>
+            <li @click="log" v-if="value==='メンバー版'"><a>記録</a></li>
+            <li @click="account" v-if="value==='お試し版'"><a>ログイン</a></li>
           </ul>
         </nav>
     </transition>
     <div>
-      <div v-if="bad" class="health-tell bad">疲れているよ<br>十分頑張っているから休めるだけ休んでね</div>
-      <div v-if="soso" class="health-tell soso">疲れ気味だよ<br>自分の体を大切にね</div>
-      <div v-if="good" class="health-tell good">記録上はまだ大丈夫だよ<br>でも、心の声を優先して休んでね</div>
+      <div v-if="bad" class="health-tell">疲れているよ<br>十分頑張っているから休めるだけ休んでね</div>
+      <div v-if="soso" class="health-tell">疲れ気味だよ<br>自分の体を大切にね</div>
+      <div v-if="good" class="health-tell">記録上はまだ大丈夫だよ<br>でも、心の声を優先して休んでね</div>
       <div class="table">
       <table>
         <tr>
@@ -50,7 +52,7 @@
           <th>食欲</th>
           <th>気力</th>
           <th>体調</th>
-          <th>備考</th>
+          <th v-if="value==='メンバー版'">備考</th>
         </tr>
         <tr>
           <td>{{now}}</td>
@@ -110,11 +112,13 @@
             </option>
         </select>
           </td>
-          <td><input type="text" v-model="remark"></td>
+          <td>
+            <input type="text" v-model="remork" v-if="value==='メンバー版'">
+          </td>
         </tr>
       </table>
-      </div>
-      <button @click="healthcount();add()">決定</button>
+    </div>
+    <button @click="healthcount">決定</button>
     </div>
     
     <div id="top-btn" class="page-top" v-scroll-to = "'body'">↑</div>
@@ -124,7 +128,7 @@
     </div>
     <div class="explain" id="2">
         <h2>使い方</h2>
-        <p>その日の体調を〇✕？(わからない)の３つから選んで記入してね<br>今日の状態をあなたに伝えるよ<br>記録をお医者さんに見せてもいいよ<br>もっと記入したいことがあったら備考に書いてね</p>
+        <p>その日の体調を〇✕？(わからない)の３つから選んで記入してね<br>今日の状態をあなたに伝えるよ<br>ログインしてメンバーになったら記録が残るよ<br>その記録をお医者さんに見せてもいいよ</p>
     </div>
   </div>
 </template>
@@ -133,6 +137,7 @@
 import firebase from "firebase";
 var date = new Date()
 export default {
+  props: ["value"],
   data(){
     return{
       selected1: '',
@@ -157,17 +162,17 @@ export default {
     };
   },
   methods: {
-      log() {
-        this.$router.push('/log')
+      account() {
+        this.$router.push('/Signin')
       },
       list() {
         this.$router.push('/list')
       },
-      aviOpen: function() {
+      naviOpen: function() {
       this.active = !this.active;
       this.navi = !this.navi;
-      },
-      healthcount() {
+    },
+    healthcount() {
       this.health=0;
       if (this.selected1 == "✕") {
         this.health++;
@@ -225,8 +230,8 @@ export default {
         this.soso=false;
         this.good=true;
       }
-      },
-      add() {
+    },
+    add() {
         var db = firebase.firestore();
         db.collection("record")
           .add({
@@ -243,7 +248,7 @@ export default {
           .then(doc => {
             console.log(doc);
       });
-    }
+    }  
   }
 };
 
@@ -256,6 +261,7 @@ table {
    margin-left: 50px;
    padding-top: 70px;
  }
+
  /*体調通知*/
  .health-tell {
    text-align:center;
@@ -376,7 +382,7 @@ h1 {
     font-style: italic;
 }
 .menu {
-    cursor: pointer; 
+    cursor: pointer;
 }
 a {
     text-decoration: none;
@@ -526,10 +532,9 @@ p {
       overflow-x: auto;
     }
     .health-tell {
-       margin: 160px 30px 20px 30px;
+      margin: 160px 30px 20px 30px;
     }
 }
  
 </style>
-
 

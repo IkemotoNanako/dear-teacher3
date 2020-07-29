@@ -13,7 +13,8 @@
             <ul class="inner-nav">
                 <li class="menu"><a href="#1">コンセプト</a></li>
                 <li class="menu"><a href="#2">使い方</a></li>
-                <li class="menu" @click="account"><a>ログイン</a></li> 
+                <li class="menu" @click="account"><a>ログイン</a></li>
+                <li class="menu" @click="list"><a>リスト</a></li>  
             </ul>
         </nav>
     </header>
@@ -30,7 +31,7 @@
             <li><a href="#1">コンセプト</a></li>
             <li><a href="#2">使い方</a></li>
             <li @click="account"><a>ログイン</a></li>
-            
+            <li @click="list"><a>リスト</a></li>
           </ul>
         </nav>
     </transition>
@@ -48,6 +49,7 @@
           <th>心の安定</th>
           <th>食欲</th>
           <th>気力</th>
+          <th>体調</th>
         </tr>
         <tr>
           <td>{{now}}</td>
@@ -99,6 +101,14 @@
             </option>
         </select>
           </td>
+          <td>
+          <select v-model="selected7">
+            <option disabled value="">選択して下さい</option>
+            <option v-for="option in options" v-bind:value="option.name" v-bind:key="option.id">
+                {{ option.name }}
+            </option>
+        </select>
+          </td>
         </tr>
       </table>
     </div>
@@ -128,6 +138,7 @@ export default {
       selected4: '',
       selected5: '',
       selected6: '',
+      selected7: '',
       options: [
         { id: 1, name: '〇' },
         { id: 2, name: '✕' },
@@ -145,13 +156,15 @@ export default {
       account() {
         this.$router.push('/Signin')
       },
+      list() {
+        this.$router.push('/list')
+      },
       naviOpen: function() {
       this.active = !this.active;
       this.navi = !this.navi;
     },
     healthcount() {
       this.health=0;
-      console.log(this.selected1);
       if (this.selected1 == "✕") {
         this.health++;
       }
@@ -170,6 +183,9 @@ export default {
       if (this.selected6 == "✕") {
         this.health++;
       }
+      if (this.selected7 == "✕") {
+        this.health++;
+      }
       if (this.selected1 == "？") {
         this.health+=2;
       }
@@ -186,6 +202,9 @@ export default {
         this.health+=2;
       }
       if (this.selected6 == "？") {
+        this.health+=2;
+      }
+      if (this.selected7 == "？") {
         this.health+=2;
       }
       console.log(this.health);
@@ -330,13 +349,12 @@ header {
 }
 h1 {
     color: #000;
-    font-size: 45px;
+    font-size: 40px;
     font-weight: bold;
     padding: 20px;
     font-style: italic;
 }
 .menu {
-    padding: 0 20px;
     cursor: pointer;
 }
 a {
