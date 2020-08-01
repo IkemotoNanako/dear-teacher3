@@ -3,13 +3,13 @@
         
         <div class="card">
             <p class="title">新規登録</p>
-            <p>メンバー登録は各項目記入後、届いたメールを開いたら完了します</p>
             <div class="form">
                 <input type="text" placeholder="ユーザーネーム" v-model="name" />
                 <input type="email" placeholder="ユーザーメール" v-model="email" />
                 <input type="password" placeholder="パスワード" v-model="password" />
                 <button @click="signUp">登録</button>
                 <p>ログインは<a class="router" @click="$router.push('/signin')">こちら</a></p>
+                <p>メンバー登録は各項目記入後、届いたメールを開いたら完了します</p>
             </div>
         </div>
     </div>

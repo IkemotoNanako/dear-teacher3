@@ -4,7 +4,6 @@
             <h1>心身を休めるためにやることリスト</h1>
             <a href="https://www.youtube.com/watch?v=_ONvyKmW63I&list=WL">例としてほっしーさんのYouTube</a>
         </header>
-        <p>注意！ ページを戻ったり更新したりするとリストは消えるよ</p>
         <ul>
             <li v-for="(todo,index) in todos" :key="index"><input type="checkbox">{{todo}}</li>
         </ul>
@@ -46,9 +45,6 @@ h1 {
 }
 a {
     padding: 50px 0px 0px 40px;
-}
-p {
-    padding-bottom: 40px;
 }
 ul {
     list-style: none;

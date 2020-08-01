@@ -11,8 +11,7 @@
         <h1>SLOTH HEALTH  体調管理代行サービス<br>{{value}}</h1>
         <nav>
             <ul class="inner-nav">
-                <li class="menu"><a href="#1">コンセプト</a></li>
-                <li class="menu"><a href="#2">使い方</a></li>
+                <li class="menu"><a href="#1">コンセプト・使い方</a></li>
                 <li class="menu" @click="log" v-if="value==='メンバー版'"><a>記録</a></li> 
                 <li class="menu" @click="list" v-if="value==='メンバー版'"><a>リスト</a></li>
                 <li class="menu" @click="account" v-if="value==='お試し版'"><a>ログイン</a></li> 
@@ -29,8 +28,7 @@
         <nav class="menu-content" v-show="navi"> 
         <p class="menu-title">Sloth</p>
           <ul class="menu-content_inner">
-            <li><a href="#1">コンセプト</a></li>
-            <li><a href="#2">使い方</a></li>
+            <li><a href="#1">コンセプト・使い方</a></li>
             <li @click="list" v-if="value==='メンバー版'"><a>リスト</a></li>
             <li @click="log" v-if="value==='メンバー版'"><a>記録</a></li>
             <li @click="account" v-if="value==='お試し版'"><a>ログイン</a></li>
@@ -113,20 +111,17 @@
         </select>
           </td>
           <td>
-            <input type="text" v-model="remork" v-if="value==='メンバー版'">
+            <input type="text" v-model="remark" v-if="value==='メンバー版'">
           </td>
         </tr>
       </table>
     </div>
     <button @click="healthcount">決定</button>
     </div>
-    
     <div id="top-btn" class="page-top" v-scroll-to = "'body'">↑</div>
-    <div class="concept" id="1">
+    <div id="1">
         <h2>コンセプト</h2>
         <p>ついつい頑張りすぎてしまう、自分の体調に気づきにくい、そんな悩みを持つ人のために作りました</p>
-    </div>
-    <div class="explain" id="2">
         <h2>使い方</h2>
         <p>その日の体調を〇✕？(わからない)の３つから選んで記入してね<br>今日の状態をあなたに伝えるよ<br>ログインしてメンバーになったら記録が残るよ<br>その記録をお医者さんに見せてもいいよ</p>
     </div>
@@ -167,6 +162,9 @@ export default {
       },
       list() {
         this.$router.push('/list')
+      },
+      log() {
+        this.$router.push('/log')
       },
       naviOpen: function() {
       this.active = !this.active;
@@ -252,15 +250,16 @@ export default {
   }
 };
 
-
-
 </script>
 <style scoped>
 /*表*/
 table {
    margin-left: 50px;
    padding-top: 70px;
- }
+}
+input {
+  margin: 0px;
+}
 
  /*体調通知*/
  .health-tell {
