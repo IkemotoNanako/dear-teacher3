@@ -116,7 +116,7 @@
         </tr>
       </table>
     </div>
-    <button @click="healthcount">決定</button>
+    <button @click="healthcount();add()">決定</button>
     </div>
     <div id="top-btn" class="page-top" v-scroll-to = "'body'">↑</div>
     <div id="1">

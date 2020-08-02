@@ -9,11 +9,11 @@ Vue.use(VueScrollTo);
 
 Vue.config.productionTip = false;
 const config = {
-  apiKey: "AIzaSyA-HgGMHTWBNK-cgBPuoUkR6NQja5cGCo8",
-  projectId: "health-dbdd6",
-  authDomain: "health-dbdd6.firebaseapp.com",
-  databaseURL: "https://health-dbdd6.firebaseio.com",
-  storageBucket: "health-dbdd6.appspot.com",
+  apiKey: "AIzaSyBpKil8q5oPiC1ADmdpjLIvYwcgLdHxq38",
+  projectId: "slothhealth",
+  authDomain: "slothhealth.firebaseapp.com",
+  databaseURL: "https://slothhealth.firebaseio.com",
+  storageBucket: "slothhealth.appspot.com",
 };
 
 firebase.initializeApp(config);
