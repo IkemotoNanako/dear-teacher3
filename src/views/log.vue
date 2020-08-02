@@ -45,7 +45,6 @@ export default {
         .then(query => {
           query.docs.forEach(doc => {
             var data = doc.data();
-
             this.records.push(data);
           });
         });

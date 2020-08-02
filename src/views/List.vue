@@ -8,11 +8,12 @@
             <li v-for="(todo,index) in todos" :key="index"><input type="checkbox">{{todo}}</li>
         </ul>
         <input type="text" v-model="newTodo">
-        <input type="submit" value="追加" @click="addTodo">
-        <input type="submit" value="削除" @click="delateTodo">
+        <input type="submit" value="追加" @click="add">
+        <input type="submit" value="削除" @click="delate">
     </div>
 </template>
 <script>
+import firebase from "firebase";
 export default {
     data() {
         return {
@@ -22,12 +23,34 @@ export default {
         }
     },
     methods: {
-        addTodo() {
-            this.todos.push(this.newTodo);
-            this.newTodo = '';
+        add() {
+            var db = firebase.firestore();
+        db.collection("list")
+          .add({
+              newTodo:this.newTodo
+          })
         },
-         delateTodo() {
-        this.subjects.splice(this.newTodo);
+        get() {
+            var db = firebase.firestore();
+         db.collection("list")
+            .get()
+            .then(query => {
+          query.docs.forEach(doc => {
+            var data = doc.data();
+            this.todos.push(data);
+          });
+        });
+        },
+  created() {
+    this.get();
+        },
+        delate() {
+            var db = firebase.firestore();
+            this.id.forEach(element => {
+            db.collection("list")
+            .doc(element)
+            .delate();
+            });
         }
     }
 }

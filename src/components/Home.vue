@@ -116,7 +116,7 @@
         </tr>
       </table>
     </div>
-    <button @click="healthcount">決定</button>
+    <button @click="healthcount();add()">決定</button>
     </div>
     <div id="top-btn" class="page-top" v-scroll-to = "'body'">↑</div>
     <div id="1">
@@ -389,7 +389,9 @@ a {
 }
 
 /*ハンバーガーメニュー*/
-
+.menu-content_inner li{
+  cursor: pointer;
+}
 
 #hamburger.is-active span:nth-of-type(1) {
     top: 20px;
@@ -510,7 +512,7 @@ p {
 /*レスポンシブ対応 ハンバーガーメニュー以外*/
 @media screen and (max-width: 768px) {
     h1 {
-        font-size: 35px;
+        font-size: 25px;
     }
     .sloth {
       width: 100%;
