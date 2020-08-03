@@ -54,7 +54,6 @@ export default {
     this.get();
   }
 };
-const sortArray = this.records.sort((a, b) => new Date(a) - new Date(b));
 </script>
 <style scoped>
 h1 {

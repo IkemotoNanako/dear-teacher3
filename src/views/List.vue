@@ -5,11 +5,11 @@
             <a href="https://www.youtube.com/watch?v=_ONvyKmW63I&list=WL">例としてほっしーさんのYouTube</a>
         </header>
         <ul>
-            <li v-for="(todo,index) in todos" :key="index"><input type="checkbox">{{todo}}</li>
+            <li v-for="(todo,index) in todos" :key="index"><input type="checkbox">{{todo.newTodo}}</li>
         </ul>
         <input type="text" v-model="newTodo">
         <input type="submit" value="追加" @click="add">
-        <input type="submit" value="削除" @click="delate">
+        <input type="submit" value="すべて削除" @click="delate">
     </div>
 </template>
 <script>
@@ -23,12 +23,19 @@ export default {
         }
     },
     methods: {
+        delate() {
+            var db = firebase.firestore();
+            db.collection("list")
+            .doc()
+            .delate();
+        },
         add() {
             var db = firebase.firestore();
         db.collection("list")
           .add({
               newTodo:this.newTodo
           })
+          console.log(db.collection("list"))
         },
         get() {
             var db = firebase.firestore();
@@ -41,16 +48,8 @@ export default {
           });
         });
         },
-  created() {
-    this.get();
-        },
-        delate() {
-            var db = firebase.firestore();
-            this.id.forEach(element => {
-            db.collection("list")
-            .doc(element)
-            .delate();
-            });
+        created() {
+            this.get();
         }
     }
 }
