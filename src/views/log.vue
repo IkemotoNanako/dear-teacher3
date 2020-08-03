@@ -62,7 +62,6 @@ h1 {
 }
 .log {
     background-color: rgb(220, 251, 255);
-    height: 500px;
 }
 table {
   border-collapse: collapse;

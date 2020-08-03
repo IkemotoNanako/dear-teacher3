@@ -9,7 +9,7 @@
         </ul>
         <input type="text" v-model="newTodo">
         <input type="submit" value="追加" @click="add">
-        <input type="submit" value="すべて削除" @click="delate">
+        <input type="submit" value="全て削除" @click="del">
     </div>
 </template>
 <script>
@@ -23,11 +23,24 @@ export default {
         }
     },
     methods: {
-        delate() {
-            var db = firebase.firestore();
+        del() {
+        var db = firebase.firestore();
+        this.id.forEach(element => {
             db.collection("list")
-            .doc()
-            .delate();
+            .doc(element)
+            .delete();
+         });
+    },
+        get1() {
+        var db = firebase.firestore();    
+        db.collection("list")
+            .get()  
+            .then(query => {
+             query.forEach(doc => {
+                 var id = doc.id;
+                 this.id.push(id);
+              });
+      });
         },
         add() {
             var db = firebase.firestore();
@@ -35,9 +48,9 @@ export default {
           .add({
               newTodo:this.newTodo
           })
-          console.log(db.collection("list"))
+          this.get1()
         },
-        get() {
+        get2() {
             var db = firebase.firestore();
          db.collection("list")
             .get()
@@ -47,10 +60,10 @@ export default {
             this.todos.push(data);
           });
         });
-        },
+        }},
         created() {
-            this.get();
-        }
+            this.get1();
+            this.get2();
     }
 }
 </script>
@@ -70,6 +83,10 @@ a {
 }
 ul {
     list-style: none;
+}
+li {
+    margin: 0px;
+    padding: 0px;
 }
 input {
     margin-bottom: 100px;
