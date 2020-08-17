@@ -26,10 +26,12 @@
           <td>{{record.remark}}</td>
         </tr>
       </table>
+       <div id="top-btn" class="page-top" v-scroll-to = "'body'">↑</div>
     </div>
   </div>
 </template>
 <script>
+
 import firebase from "firebase";
 export default {
   data() {
@@ -38,10 +40,16 @@ export default {
     };
   },
   methods: {
-    get() {
+    async get() {
       var db = firebase.firestore();
       db.collection("record")
+      //recordコレクションの中に登録したemailがあるもののみ表示
+        .where("email", "==",
+        this.$store.state.user.email)
+      //日付順に降順に並び変える
+        .orderBy('time','desc')
         .get()
+      //データベースの値をqueryという変数に代入し、forEachで配列を分解し、取得した値を record配列に挿入
         .then(query => {
           query.docs.forEach(doc => {
             var data = doc.data();
@@ -102,5 +110,17 @@ table td:last-child{
     .table {
       overflow-x: auto;
     }
+}
+#top-btn {
+    background: #000;
+    color: #fff;
+    text-align: center;
+    line-height: 40px;
+    cursor: pointer;
+    position: fixed;
+    width: 40px;
+    height: 40px;
+    bottom: 20px;
+    right: 20px;
 }
 </style>

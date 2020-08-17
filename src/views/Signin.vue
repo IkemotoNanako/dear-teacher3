@@ -26,8 +26,10 @@ export default {
         signIn() {
             firebase
             .auth()
+            //firebase authenticationによりログインを行っている
             .signInWithEmailAndPassword(this.email, this.password)
             .then(data => {
+            //メールアドレスとパスワードが一致したらメンバー版に入れる
                 if (data.user.emailVerified) {
                     this.$store.dispatch("changeUserAction", 
     {

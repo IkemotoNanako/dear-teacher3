@@ -26,6 +26,7 @@ export default {
         };
     },
     methods: {
+        //ユーザーアカウント作成とメール確認
         signUp() {
             firebase
             .auth()

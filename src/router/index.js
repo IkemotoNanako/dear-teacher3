@@ -21,6 +21,7 @@ Vue.use(VueRouter)
     name: 'Account',
     component: Account,
     meta: {
+      //ログイン後のみ入れるようにするため
       requiresAuth: true
     }
   },
@@ -51,6 +52,7 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 })
+//認証の状態を判断し、認証ができていなかったら signinに飛ばすように設定
 router.beforeEach((to, from, next) => {
   const requiresAuth = to.matched.some(record=>record.meta.requiresAuth) 
   if (requiresAuth) {

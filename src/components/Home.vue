@@ -12,8 +12,8 @@
         <nav>
             <ul class="inner-nav">
                 <li class="menu"><a href="#1">コンセプト・使い方</a></li>
+                <li class="menu" @click="list"><a>リスト</a></li>
                 <li class="menu" @click="log" v-if="value==='メンバー版'"><a>記録</a></li> 
-                <li class="menu" @click="list" v-if="value==='メンバー版'"><a>リスト</a></li>
                 <li class="menu" @click="account" v-if="value==='お試し版'"><a>ログイン</a></li> 
             </ul>
         </nav>
@@ -29,7 +29,7 @@
         <p class="menu-title">Sloth</p>
           <ul class="menu-content_inner">
             <li><a href="#1">コンセプト・使い方</a></li>
-            <li @click="list" v-if="value==='メンバー版'"><a>リスト</a></li>
+            <li @click="list"><a>リスト</a></li>
             <li @click="log" v-if="value==='メンバー版'"><a>記録</a></li>
             <li @click="account" v-if="value==='お試し版'"><a>ログイン</a></li>
           </ul>
@@ -127,12 +127,12 @@
     </div>
   </div>
 </template>
-
 <script>
 import firebase from "firebase";
 var date = new Date()
+var month = date.getMonth() + 1//月を取得し実際の月と合うように＋1している
 export default {
-  props: ["value"],
+  props: ["value"],//子が受け取るデータ名を記述している
   data(){
     return{
       selected1: '',
@@ -142,18 +142,19 @@ export default {
       selected5: '',
       selected6: '',
       selected7: '',
-      options: [
+      options: [//〇✕？が選択肢として出るようにする記述
         { id: 1, name: '〇' },
         { id: 2, name: '✕' },
         { id: 3, name: '？' }
                 ],
-     now: date.getMonth() + "/" + date.getDate(),
-     bad: false,
-     soso: false,
-     good: false,
-     active: false,
-     navi: false,
-     remark: ''
+     now: month + "/" + date.getDate(),//取得した日付を見栄えよくしている
+     bad: false,//体調通知をはじめは見えなくしている
+     soso: false,//体調通知をはじめは見えなくしている
+     good: false,//体調通知をはじめは見えなくしている
+     active: false,//ハンバーガーメニューの記述
+     navi: false,//ハンバーガーメニューの記述
+     remark: '',
+     time:firebase.firestore.FieldValue.serverTimestamp()
     };
   },
   methods: {
@@ -166,11 +167,13 @@ export default {
       log() {
         this.$router.push('/log')
       },
-      naviOpen: function() {
+      naviOpen: function()//ハンバーガーメニューの動き
+       {
       this.active = !this.active;
       this.navi = !this.navi;
     },
-    healthcount() {
+    healthcount()//health変数を✕、？のとき＋１、＋２していっている
+     {
       this.health=0;
       if (this.selected1 == "✕") {
         this.health++;
@@ -214,12 +217,13 @@ export default {
       if (this.selected7 == "？") {
         this.health+=2;
       }
-      console.log(this.health);
-      if (this.health >= 3){
+      if (this.health >= 3)//health変数の値によって体調通知を三段階に変化させている
+      {
         this.bad=true;
         this.soso=false;
         this.good=false;
-      } else if (this.health>=1){
+      } else if (this.health>=1)
+      {
         this.bad=false;
         this.soso=true;
         this.good=false;
@@ -241,9 +245,11 @@ export default {
             selected5:this.selected5,
             selected6:this.selected6,
             selected7:this.selected7,
-            remark:this.remark
+            remark:this.remark,
+            email:this.$store.state.user.email,//自分の記録のみ見えるようにするため追加している
+            time:this.time//日付順に並び変えるため追加している
           })
-          .then(doc => {
+          .then(doc => {//確認のための記述
             console.log(doc);
       });
     }  
@@ -251,6 +257,8 @@ export default {
 };
 
 </script>
+
+
 <style scoped>
 /*表*/
 table {
@@ -270,6 +278,10 @@ input {
    padding: 20px;
    border-radius: 20px;
 
+ }
+ .login {
+   color: #0af;
+   cursor: pointer;
  }
  /*背景デザイン*/
 
@@ -389,9 +401,7 @@ a {
 }
 
 /*ハンバーガーメニュー*/
-.menu-content_inner li{
-  cursor: pointer;
-}
+
 
 #hamburger.is-active span:nth-of-type(1) {
     top: 20px;
@@ -509,14 +519,10 @@ p {
     line-height: 130%;
     font-size: 20px
 }
-.login {
-  color: #0af;
-  cursor: pointer;
-}
 /*レスポンシブ対応 ハンバーガーメニュー以外*/
 @media screen and (max-width: 768px) {
     h1 {
-        font-size: 25px;
+        font-size: 30px;
     }
     .sloth {
       width: 100%;
